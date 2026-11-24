@@ -43,10 +43,25 @@ streamlit run app.py
 
 Then open the local URL Streamlit prints (default http://localhost:8501).
 
+## Measured performance
+
+The saved model (`heart_model.pkl`, a RandomForestClassifier) was evaluated on a
+20% stratified hold-out of the shipped dataset (205 of 1,025 rows,
+random_state=42, same one-hot + scaling pipeline the app uses):
+
+| Metric | Value |
+|---|---|
+| Accuracy | 99.5% |
+| F1 (positive class) | 0.995 |
+| Confusion matrix | 100 true neg / 0 false pos / 1 false neg / 104 true pos |
+
 ## Honest notes
 
-- The repo ships the inference app and artifacts, not the training notebook, so
-  accuracy metrics are not published here - the model card is "unknown until
-  measured". Treat predictions as a demo of the UI + pipeline, not as evidence.
+- The repo ships the inference app and artifacts, not the training notebook.
+  The numbers above are measured on the shipped artifacts; near-perfect scores
+  are common on this classic dataset and do not mean the model generalizes to
+  real patients. The shipped scaler was fit on the full dataset, so the
+  hold-out numbers are slightly optimistic (minor leakage through feature
+  scaling). Treat predictions as a demo of the UI + pipeline, not as evidence.
 - The dataset follows the classic UCI Heart Disease schema (Cleveland-style
   13 features + target).
